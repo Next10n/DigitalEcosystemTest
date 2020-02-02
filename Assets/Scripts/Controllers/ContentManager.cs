@@ -29,6 +29,7 @@ public class ContentManager : MonoBehaviour
 
     private void AddCountrieToList(string name, int area, int gdp, int population)
     {
+        if (IsCountryInList(name)) return;
         GameObject temp = Instantiate(_contentPrefab);
         temp.transform.parent = _content.transform;
         temp.tag = "Content";
@@ -46,7 +47,19 @@ public class ContentManager : MonoBehaviour
         {
             Destroy(go);
         }
-        //Debug.Log(GameObject.FindGameObjectsWithTag("Content").Length);
+    }
+
+    private bool IsCountryInList(string name)
+    {
+        GameObject[] contents = GameObject.FindGameObjectsWithTag("Content");
+        for(int i =0; i < contents.Length; i++)
+        {
+            if(contents[i].transform.Find("Name").GetComponent<Text>().text == name)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 
